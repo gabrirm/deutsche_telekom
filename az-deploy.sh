@@ -5,7 +5,7 @@ LOCATION="westeurope"
 SITE_NAME="deutschetelekom"
 PLAN_NAME="ServicePlan"
 RESOURCE_GROUP="rg_deutschetelekom"
-PHP_VERSION="8.2"
+PHP_VERSION="8.3"
 GITHUB_REPO="https://github.com/gabrirm/deutsche_telekom.git"
 
 
@@ -19,5 +19,5 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # Create webapp
 az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION" 
-az webapp deployment source config --name $SITE_NAME --resource-group $RESOURCE_GROUP --repo-url $GITHUB_REPO --branch main --manual-integration
+az webapp deployment source config --name $SITE_NAME --resource-group $RESOURCE_GROUP --repo-url $GITHUB_REPO --branch main --enable-cd true
 
