@@ -16,8 +16,9 @@ az login --service-principal -u $AZ_CLIENT_ID -p $AZ_CLIENT_SECRET --tenant $AZ_
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # Create an App Service plan
-az appservice plan create --name $PLAN_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --is-linux --sku F1
 
 # Create webapp
-az webapp create --name $SITE_NAME --resource-group $RESOURCE_GROUP --plan $PLAN_NAME  --deployment-local-git --runtime "PHP|$PHP_VERSION"
-az webapp config set --resource-group $RESOURCE_GROUP --name $SITE_NAME --php-version $PHP_VERSION 
+az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION" --html
+az webapp deployment source config-local-git --name $SITE_NAME --resource-group $RESOURCE_GROUP
+git remote add azure $(az webapp deployment source config-local-git --name $SITE_NAME --resource-group $RESOURCE_GROUP --query url --output tsv)
+git push azure master
