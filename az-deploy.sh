@@ -6,7 +6,7 @@ SITE_NAME="deutschetelekom"
 PLAN_NAME="ServicePlan"
 RESOURCE_GROUP="rg_deutschetelekom"
 PHP_VERSION="8.3"
-GITHUB_REPO="https://github.com/gabrirm/deutsche_telekom.git#main"
+GITHUB_REPO="https://github.com/gabrirm/deutsche_telekom.git"
 
 
 # Log in to Azure using github secrets
@@ -19,5 +19,5 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 az appservice plan create --name $PLAN_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --is-linux --sku FREE
 
 # Create webapp
-az webapp create --name $SITE_NAME --resource-group $RESOURCE_GROUP --plan $PLAN_NAME  --deployment-source-url $GITHUB_REPO --runtime "PHP|$PHP_VERSION"
+az webapp create --name $SITE_NAME --resource-group $RESOURCE_GROUP --plan $PLAN_NAME  --deployment-source-url $GITHUB_REPO --github-token $TOKEN --runtime "PHP|$PHP_VERSION"
 az webapp config set --resource-group $RESOURCE_GROUP --name $SITE_NAME --php-version $PHP_VERSION

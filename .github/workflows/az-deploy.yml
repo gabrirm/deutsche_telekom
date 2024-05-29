@@ -29,4 +29,5 @@ jobs:
         AZ_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
         TOKEN: ${{ secrets.TOKEN }}
         REPO_URL: ${{ secrets.REPO_URL }}
-        GREETING_NAME: ${{ secrets.GREETING_NAME }} 
+        GREETING_NAME: ${{ secrets.GREETING_NAME }}
+        TOKEN: ${{ secrets.TOKEN }}
