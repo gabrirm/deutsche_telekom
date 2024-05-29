@@ -20,7 +20,6 @@ jobs:
 
     - name: Deploy to Azure Web App
       run: |
-        sed -i 's/\$GREETING_NAME/${{ secrets.GREETING_NAME }}/g' index.html
         chmod +x ./az-deploy.sh
         ./az-deploy.sh
       env:

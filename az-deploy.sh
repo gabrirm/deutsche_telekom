@@ -18,6 +18,7 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 # Create an App Service plan
 
 # Create webapp
-az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION" 
+az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION"
+sed -i 's/\$GREETING_NAME/${{ secrets.GREETING_NAME }}/g' index.html 
 az webapp deployment source config --name $SITE_NAME --resource-group $RESOURCE_GROUP --repo-url $GITHUB_REPO --branch main --manual-integration
 
