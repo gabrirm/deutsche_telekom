@@ -19,5 +19,5 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # Create webapp
 az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION" 
-az webapp deployment source config --name $SITE_NAME --resource-group $RESOURCE_GROUP --repo-url $GITHUB_REPO --branch main --git-token $TOKEN
+az webapp deployment source config --name $SITE_NAME --resource-group $RESOURCE_GROUP --repo-url $GITHUB_REPO --branch main --manual-integration
 
