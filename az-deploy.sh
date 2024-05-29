@@ -16,7 +16,7 @@ az login --service-principal -u $AZ_CLIENT_ID -p $AZ_CLIENT_SECRET --tenant $AZ_
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # Create an App Service plan
-az appservice plan create --name $PLAN_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --sku FREE
+az appservice plan create --name $PLAN_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --is-linux --sku FREE
 
 # Create webapp
 az webapp create --name $SITE_NAME --resource-group $RESOURCE_GROUP --plan $PLAN_NAME  --deployment-source-url $GITHUB_REPO --runtime "PHP|$PHP_VERSION"
