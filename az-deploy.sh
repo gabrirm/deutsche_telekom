@@ -6,7 +6,7 @@ SITE_NAME="deutschetelekom"
 PLAN_NAME="ServicePlan"
 RESOURCE_GROUP="rg_deutschetelekom"
 PHP_VERSION="8.3"
-GITHUB_REPO=https://github.com/gabrirm/deutsche_telekom.git
+GITHUB_REPO="https://github.com/gabrirm/deutsche_telekom.git"
 
 
 # Log in to Azure using github secrets
