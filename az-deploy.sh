@@ -21,4 +21,4 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION" 
 az webapp deployment source config-local-git --name $SITE_NAME --resource-group $RESOURCE_GROUP
 git remote add azure $(az webapp deployment source config-local-git --name $SITE_NAME --resource-group $RESOURCE_GROUP --query url --output tsv)
-git push azure master
+git push azure -u origin master
