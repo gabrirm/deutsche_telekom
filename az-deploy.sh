@@ -6,6 +6,7 @@ SITE_NAME="deutschetelekom"
 PLAN_NAME="ServicePlan"
 RESOURCE_GROUP="rg_deutschetelekom"
 PHP_VERSION="8.2"
+GITHUB_REPO="https://github.com/gabrirm/deutsche_telekom.git"
 
 
 # Log in to Azure using github secrets
@@ -18,6 +19,5 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # Create webapp
 az webapp up --name $SITE_NAME --resource-group $RESOURCE_GROUP --location $LOCATION --os-type=linux --runtime "PHP|$PHP_VERSION" 
-az webapp deployment source config-local-git --name $SITE_NAME --resource-group $RESOURCE_GROUP
-git remote add azure $(az webapp deployment source config-local-git --name $SITE_NAME --resource-group $RESOURCE_GROUP --query url --output tsv)
-git push azure main
+az webapp deployment source config --name $SITE_NAME --resource-group $RESOURCE_GROUP --repo-url $GITHUB_REPO --branch main --git-token $TOKEN
+
