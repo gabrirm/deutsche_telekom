@@ -4,7 +4,6 @@
 LOCATION="westeurope"
 SITE_NAME="deutschetelekom"
 RESOURCE_GROUP="rg_deutschetelekom"
-REPO_URL="https://github.com/gabrirm/deutsche_telekom.git"
 
 
 # Log in to Azure using github secrets
