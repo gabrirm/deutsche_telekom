@@ -1,93 +1,31 @@
+<!-- src/chat.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM Chat Feature</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .chat-container {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        .messages {
-            height: 300px;
-            overflow-y: scroll;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            background: #fff;
-        }
-        .input-container {
-            display: flex;
-        }
-        .input-container input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px 0 0 5px;
-        }
-        .input-container button {
-            padding: 10px;
-            border: none;
-            background: #007BFF;
-            color: white;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-    </style>
+    <title>Chat with LLM</title>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="messages" id="messages"></div>
-        <div class="input-container">
-            <input type="text" id="user-input" placeholder="Type a message...">
-            <button onclick="sendMessage()">Send</button>
-        </div>
+    <h1>Chat with LLM</h1>
+    <div id="chat-box">
+        <!-- Chat messages will appear here -->
     </div>
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+
     <script>
-        const messagesDiv = document.getElementById('messages');
-
-        function sendMessage() {
+        async function sendMessage() {
             const userInput = document.getElementById('user-input').value;
-            if (!userInput) return;
-
-            addMessage('You', userInput);
-            document.getElementById('user-input').value = '';
-
-            // Call the OPENAI API
-            fetch('/api/chat', {
+            const response = await fetch('/api/chat.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ message: userInput })
-            })
-            .then(response => response.json())
-            .then(data => {
-                addMessage('Bot', data.reply);
-            })
-            .catch(error => {
-                console.error('Error:', error);
             });
-        }
-
-        function addMessage(sender, text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.textContent = `${sender}: ${text}`;
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            const data = await response.json();
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<p>You: ${userInput}</p><p>LLM: ${data.reply}</p>`;
+            document.getElementById('user-input').value = '';
         }
     </script>
 </body>
