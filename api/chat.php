@@ -3,16 +3,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $message = $input['message'];
 
-    // Call to OpenAI API
+    // Call to Hugging Face API (e.g., Llama 2)
     $apiKey = 'API_KEY_PLACEHOLDER';
-    $url = 'https://api.openai.com/v1/chat/completions';
+    $url = 'https://api-inference.huggingface.co/models/gpt2';
 
     $data = array(
-        'model' => 'gpt-3.5-turbo', 
-        'messages' => array(
-            array('role' => 'user', 'content' => $message)
-        ),
-        'max_tokens' => 150
+        'inputs' => $message
     );
 
     $options = array(
@@ -21,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          "Authorization: Bearer $apiKey\r\n",
             'method'  => 'POST',
             'content' => json_encode($data),
-            'ignore_errors' => true 
+            'ignore_errors' => true // This will allow us to capture HTTP response codes
         ),
     );
 
@@ -36,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = json_decode($result, true);
 
     if (isset($response['error'])) {
-        die(json_encode(['error' => $response['error']['message']]));
+        die(json_encode(['error' => $response['error']]));
     }
 
-    echo json_encode(['reply' => $response['choices'][0]['message']['content']]);
+    echo json_encode(['reply' => $response[0]['generated_text']]);
 }
 ?>
