@@ -3,15 +3,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $message = $input['message'];
 
-    // Call to LLM API (e.g., OpenAI)
-    $apiKey = getenv('API_KEY');
-    if (!$apiKey) {
-        die(json_encode(['error' => 'API key not set.']));
-    }
-    $url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+    // Call to OpenAI API
+    $apiKey = 'API_KEY_PLACEHOLDER';
+    $url = 'https://api.openai.com/v1/chat/completions';
 
     $data = array(
-        'prompt' => $message,
+        'model' => 'gpt-3.5-turbo', 
+        'messages' => array(
+            array('role' => 'user', 'content' => $message)
+        ),
         'max_tokens' => 150
     );
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                          "Authorization: Bearer $apiKey\r\n",
             'method'  => 'POST',
             'content' => json_encode($data),
-            'ignore_errors' => true // This will allow us to capture HTTP response codes
+            'ignore_errors' => true 
         ),
     );
 
@@ -39,6 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die(json_encode(['error' => $response['error']['message']]));
     }
 
-    echo json_encode(['reply' => $response['choices'][0]['text']]);
+    echo json_encode(['reply' => $response['choices'][0]['message']['content']]);
 }
 ?>
