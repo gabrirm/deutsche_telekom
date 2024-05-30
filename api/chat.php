@@ -4,10 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = $input['message'];
 
     // Call to LLM API (e.g., OpenAI)
-    $apiKey = getenv('API_KEY');
-    if (!$apiKey) {
-        die(json_encode(['error' => 'API key not set.']));
-    }
+    $apiKey = 'API_KEY_PLACEHOLDER';
     $url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
 
     $data = array(
