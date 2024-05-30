@@ -26,3 +26,4 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
         REPO_URL: ${{ secrets.REPO_URL }}
         GREETING_NAME: ${{ secrets.GREETING_NAME }}
+        API_KEY: ${{ secrets.API_KEY }}
