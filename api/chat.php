@@ -3,12 +3,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $message = $input['message'];
 
-    // Call to Hugging Face API (e.g., Llama 2)
+    // Call to LLM API (e.g., OpenAI)
     $apiKey = 'API_KEY_PLACEHOLDER';
-    $url = 'https://api-inference.huggingface.co/models/nvidia/Llama3-ChatQA-1.5-8B';
+    $url = 'https://api.openai.com/v1/engines/davinci-codex/completions';
 
     $data = array(
-        'inputs' => $message
+        'prompt' => $message,
+        'max_tokens' => 150
     );
 
     $options = array(
@@ -35,6 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die(json_encode(['error' => $response['error']]));
     }
 
-    echo json_encode(['reply' => $response[0]['generated_text']]);
+    echo json_encode(['reply' => $response['choices'][0]['text']]);
 }
 ?>
