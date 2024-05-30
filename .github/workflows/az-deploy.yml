@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - chat_feature
 
 jobs:
   build-and-deploy:
@@ -13,11 +14,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
     - name: Deploy to Azure Web App
       run: |
         sed -i 's/\$GREETING_NAME/${{ secrets.GREETING_NAME }}/g' index.html
@@ -30,3 +26,4 @@ jobs:
         TOKEN: ${{ secrets.TOKEN }}
         REPO_URL: ${{ secrets.REPO_URL }}
         GREETING_NAME: ${{ secrets.GREETING_NAME }}
+        API_KEY: ${{ secrets.API_KEY }}
