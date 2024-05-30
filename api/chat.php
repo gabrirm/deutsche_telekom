@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Call to Hugging Face API (e.g., Llama 2)
     $apiKey = 'API_KEY_PLACEHOLDER';
-    $url = 'https://api-inference.huggingface.co/models/gpt2';
+    $url = 'https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B';
 
     $data = array(
         'inputs' => $message
