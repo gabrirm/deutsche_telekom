@@ -1,32 +1,35 @@
-<!-- src/chat.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Chat with LLM</title>
-</head>
-<body>
-    <h1>Chat with LLM</h1>
-    <div id="chat-box">
-        <!-- Chat messages will appear here -->
-    </div>
-    <input type="text" id="user-input" placeholder="Type your message...">
-    <button onclick="sendMessage()">Send</button>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
     <script>
-        async function sendMessage() {
-            const userInput = document.getElementById('user-input').value;
+        async function sendMessage(event) {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+
             const response = await fetch('/api/chat.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ message: userInput })
+                body: JSON.stringify({ message })
             });
+
             const data = await response.json();
-            const chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML += `<p>You: ${userInput}</p><p>LLM: ${data.reply}</p>`;
-            document.getElementById('user-input').value = '';
+            document.getElementById('response').innerText = data.reply;
         }
     </script>
+</head>
+<body>
+    <h1>Chat with OpenAI</h1>
+    <form onsubmit="sendMessage(event)">
+        <label for="message">Enter your message:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Send</button>
+    </form>
+    <h2>Response:</h2>
+    <p id="response"></p>
 </body>
 </html>
